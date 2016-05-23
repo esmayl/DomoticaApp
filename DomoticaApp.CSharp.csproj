@@ -72,8 +72,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Code\Actions.cs" />
+    <Compile Include="Assets\Code\Alarm.cs" />
+    <Compile Include="Assets\Code\GenerateTime.cs" />
+    <Compile Include="Assets\Code\InputHandler.cs" />
+    <Compile Include="Assets\Code\LocalHelper.cs" />
     <Compile Include="Assets\Code\NetworkingHelper.cs" />
-    <Compile Include="Assets\InputHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
