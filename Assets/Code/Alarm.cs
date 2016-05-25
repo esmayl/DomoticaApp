@@ -16,6 +16,13 @@ public class Alarm
 
     }
 
+    public Alarm()
+    {
+        alarmTime = DateTime.Now;
+
+        actionToPerform = D;
+    }
+
     public void D()
     {
         Debug.Log("Hello!");

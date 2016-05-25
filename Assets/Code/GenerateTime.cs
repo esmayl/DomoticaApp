@@ -8,7 +8,7 @@ public class GenerateTime : MonoBehaviour
 
 
 
-    void Start ()
+    void Start()
     {
 
         if (GetComponent<Dropdown>())
@@ -20,7 +20,7 @@ public class GenerateTime : MonoBehaviour
         {
             for (int i = 1; i < 24; i++)
             {
-                list.options.Add(new Dropdown.OptionData(""+i));
+                list.options.Add(new Dropdown.OptionData("" + i));
             }
         }
 
@@ -38,6 +38,19 @@ public class GenerateTime : MonoBehaviour
                 }
             }
         }
+
+        if (gameObject.name == "Dag")
+        {
+            for (int i = 1; i < 32; i++)
+            {
+                list.options.Add(new Dropdown.OptionData("" + i));
+            }
+        }
+
+        if (gameObject.name == "Maand")
+        {
+
+        }
+
     }
-	
 }

@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomoticaApp.CSharp.Plugins"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomoticaApp.CSharp", "DomoticaApp.CSharp.csproj", "{39DA3706-C31A-0924-E2DC-9C7B8337518F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomoticaApp.CSharp.Editor", "DomoticaApp.CSharp.Editor.csproj", "{DA1CCD12-91B6-422F-7EE6-1777888F7620}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,10 +19,6 @@ Global
 		{39DA3706-C31A-0924-E2DC-9C7B8337518F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39DA3706-C31A-0924-E2DC-9C7B8337518F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39DA3706-C31A-0924-E2DC-9C7B8337518F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA1CCD12-91B6-422F-7EE6-1777888F7620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA1CCD12-91B6-422F-7EE6-1777888F7620}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA1CCD12-91B6-422F-7EE6-1777888F7620}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA1CCD12-91B6-422F-7EE6-1777888F7620}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

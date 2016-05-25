@@ -3,12 +3,15 @@ using System.Collections;
 
 public class InputHandler : MonoBehaviour
 {
+    public NetworkingHelper networkObj;
 
 	void Update ()
     {
 	    if (Input.GetKeyUp(KeyCode.Escape))
 	    {
-	        Application.Quit();
+            //networkObj.CloseConnection();
+
+            Application.Quit();
 	    }
 	}
 }
