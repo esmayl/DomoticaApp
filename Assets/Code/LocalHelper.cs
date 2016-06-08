@@ -57,6 +57,6 @@ public class LocalHelper : MonoBehaviour
 
     public void KoffieZetten()
     {
-        network.KoffieZetten();
+        network.KoffieZetten1();
     }
 }

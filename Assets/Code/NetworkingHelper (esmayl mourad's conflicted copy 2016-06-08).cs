@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -14,8 +15,8 @@ using Debug = UnityEngine.Debug;
 public enum KoffieStates
 {
     KA = 0,
-    KZ = 1,
-    KoffieUit = 2,
+    K1 = 1,
+    K2 = 2,
     Default = -1
 }
 
@@ -30,7 +31,7 @@ public class NetworkingHelper : MonoBehaviour
     string debugString;
 
     int networkIp = 1;
-    int subnetIp = 127;
+    int subnetIp = 7;
 
     bool initializing = false;
     bool sendingRequest = false;
@@ -46,30 +47,26 @@ public class NetworkingHelper : MonoBehaviour
     void Start()
     {
         url = String.Format("192.168.{0}.{1}", networkIp, subnetIp);
-        
+
         Thread initThread = new Thread(InitializeConnection);
         initThread.IsBackground = true;
         initThread.Start();
 
-        //StartCoroutine("CheckForResponse");
         Thread responseThread = new Thread(CheckForResponse);
         responseThread.Start();
     }
 
     void Update()
     {
-        if (initializing) { return;}
-
         if (debugString != null)
         {
             debugText.GetComponent<Text>().text = debugString;
         }
-        
     }
 
     void InitializeConnection()
     {
-        if (initializing || sendingRequest) { return;}
+        if (initializing || sendingRequest) { return; }
 
         initializing = true;
 
@@ -91,7 +88,7 @@ public class NetworkingHelper : MonoBehaviour
             {
                 responseListener = new TcpListener(IPAddress.Any, 15327);
                 responseListener.Start();
-                debugString=("Listening");
+                debugString = ("Listening");
             }
             catch (Exception e)
             {
@@ -105,7 +102,7 @@ public class NetworkingHelper : MonoBehaviour
         {
             webStream = webSocket.GetStream();
 
-            webWriter = new StreamWriter(webStream,Encoding.ASCII);
+            webWriter = new StreamWriter(webStream, Encoding.ASCII);
 
             debugString = ("Write stream initialized");
         }
@@ -127,23 +124,36 @@ public class NetworkingHelper : MonoBehaviour
         currentState = KoffieStates.KA;
 
         StartCoroutine("WaitForConnection");
-
     }
 
-    public void KoffieZetten()
+    public void KoffieZetten1()
     {
 
-        if (sendingRequest) { return;}
+        if (sendingRequest) { return; }
 
         if (!webStream.CanWrite)
         {
             InitializeConnection();
         }
 
-        currentState = KoffieStates.KZ;
+        currentState = KoffieStates.K1;
 
         StartCoroutine("WaitForConnection");
+    }
 
+    public void KoffieZetten2()
+    {
+
+        if (sendingRequest) { return; }
+
+        if (!webStream.CanWrite)
+        {
+            InitializeConnection();
+        }
+
+        currentState = KoffieStates.K2;
+
+        StartCoroutine("WaitForConnection");
     }
 
 
@@ -155,16 +165,19 @@ public class NetworkingHelper : MonoBehaviour
 
         while (initializing)
         {
-            debugString = ("Initializing");
+            debugString=("Initing");
             yield return new WaitForSeconds(0.1f);
         }
 
-        debugString = ("State: "+currentState.ToString());
 
-        WriteString((int)currentState);
-        //WriteString(currentState.ToString());
+
+        debugString = ("State: " + currentState.ToString());
+
+        WriteString(currentState.ToString());
 
         sendingRequest = false;
+        webSocket.Close();
+
 
         yield return null;
     }
@@ -173,7 +186,7 @@ public class NetworkingHelper : MonoBehaviour
     {
         while (true)
         {
-            if (responseListener != null )
+            if (responseListener != null)
             {
                 if (responseListener.Pending())
                 {
@@ -190,22 +203,12 @@ public class NetworkingHelper : MonoBehaviour
 
                 if (responseString != null)
                 {
-                    debugString = ("Response: "+responseString);
+                   debugString=("Response: " + responseString);
                 }
 
             }
 
             Thread.Sleep(500);
-        }
-    }
-
-    public void WriteString(int valueToWrite)
-    {
-        if (webStream.CanWrite)
-        {
-            webWriter.Write(valueToWrite);
-            webWriter.Flush();
-            webWriter.Close();
         }
     }
 
@@ -235,22 +238,11 @@ public class NetworkingHelper : MonoBehaviour
 
     public void CloseConnection()
     {
-        if (responseReader != null)
-        {
-            responseReader.Close();
-        }
-        if (webStream != null)
-        {
-            webStream.Close();
-        }
-        if (responseSocket != null)
-        {
-            responseSocket.Close();
-        }
-        if (responseListener != null)
-        {
-            responseListener.Stop();
-        }
+        webSocket.Close();
+        responseReader.Close();
+        webStream.Close();
+        responseSocket.Close();
+        responseListener.Stop();
     }
 
     void OnApplicationQuit()

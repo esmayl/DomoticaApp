@@ -78,6 +78,8 @@
     <Compile Include="Assets\Code\InputHandler.cs" />
     <Compile Include="Assets\Code\LocalHelper.cs" />
     <Compile Include="Assets\Code\NetworkingHelper.cs" />
+    <Compile Include="Assets\Code\ScrollEx.cs" />
+    <Compile Include="Assets\Code\UIAlarm.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
