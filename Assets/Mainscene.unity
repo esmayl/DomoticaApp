@@ -2886,7 +2886,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 306575837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365c8f0c5958f064eb347370c34b6aac, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f41c950ed5bec14884769de0c2e8627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugText: {fileID: 1927235574}
@@ -14888,7 +14888,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Debug Text
+  m_Text: Connectie status
 --- !u!222 &1927235577
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15202,7 +15202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

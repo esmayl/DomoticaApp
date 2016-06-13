@@ -12,20 +12,12 @@ public class Alarm
         alarmTime = timeToSet;
 
         actionToPerform = newAction;
-        actionToPerform += D;
-
     }
 
     public Alarm()
     {
         alarmTime = DateTime.Now;
 
-        actionToPerform = D;
-    }
-
-    public void D()
-    {
-        Debug.Log("Hello!");
     }
 
     public DateTime AlarmTime()

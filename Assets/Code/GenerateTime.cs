@@ -6,8 +6,6 @@ public class GenerateTime : MonoBehaviour
 {
     private Dropdown list;
 
-
-
     void Start()
     {
 
@@ -49,7 +47,27 @@ public class GenerateTime : MonoBehaviour
 
         if (gameObject.name == "Maand")
         {
+            for (int i = 1; i <= 12; i++)
+            {
+                list.options.Add(new Dropdown.OptionData("" + i));
+            }
+        }
 
+        if (gameObject.name == "Jaar")
+        {
+            string eeuw ="20";
+
+            for (int i = 16; i < 26; i++)
+            {
+                if (i < 10)
+                {
+                    list.options.Add(new Dropdown.OptionData(eeuw + "0" + i));
+                }
+                else
+                {
+                    list.options.Add(new Dropdown.OptionData(eeuw+i));
+                }
+            }
         }
 
     }

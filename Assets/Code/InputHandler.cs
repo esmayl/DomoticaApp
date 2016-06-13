@@ -9,9 +9,13 @@ public class InputHandler : MonoBehaviour
     {
 	    if (Input.GetKeyUp(KeyCode.Escape))
 	    {
-            //networkObj.CloseConnection();
-
             Application.Quit();
 	    }
 	}
+
+    void OnApplicationQuit()
+    {
+        networkObj.CloseResponseConnection();
+        networkObj.CloseSendCon();
+    }
 }
