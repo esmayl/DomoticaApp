@@ -34,7 +34,11 @@ public class NetworkingHelper : MonoBehaviour
     int subnetIp = 1;
 
     int errorCodeRfid = 3;
-    
+    int errorCodeKopje = 4;
+
+    public bool opwarmen = false;
+    public bool koffieUit = false;
+
     bool initializing = false;
     bool sendingRequest = false;
 
@@ -58,11 +62,10 @@ public class NetworkingHelper : MonoBehaviour
             {
                 responseListener = new TcpListener(IPAddress.Any, 15327);
                 responseListener.Start();
-                debugString = ("Listening");
             }
             catch (Exception e)
             {
-                debugString = (e.Message);
+                debugString = ("Error: "+e.Message);
                 initializing = false;
                 return;
             }
@@ -94,11 +97,10 @@ public class NetworkingHelper : MonoBehaviour
         try
         {
             webClient = new TcpClient(url, 15326);
-            debugString = ("Connected");
         }
         catch (Exception e)
         {
-            debugString = (e.Message);
+            debugString = ("Error: "+e.Message);
             initializing = false;
             return;
         }
@@ -110,8 +112,6 @@ public class NetworkingHelper : MonoBehaviour
             webStream = webClient.GetStream();
 
             webWriter = new StreamWriter(webStream, Encoding.ASCII);
-
-            debugString = ("Write stream initialized");
         }
 
         webClient.Close();
@@ -125,11 +125,10 @@ public class NetworkingHelper : MonoBehaviour
         try
         {
             webClient = new TcpClient(url, 15326);
-            debugString = ("Connected");
         }
         catch (Exception e)
         {
-            debugString = (e.Message);
+            debugString = ("Error: "+e.Message);
             initializing = false;
             return;
         }
@@ -139,8 +138,6 @@ public class NetworkingHelper : MonoBehaviour
             webStream = webClient.GetStream();
 
             webWriter = new StreamWriter(webStream, Encoding.ASCII);
-
-            debugString = ("Write stream initialized");
         }
 
         initializing = false;
@@ -149,6 +146,8 @@ public class NetworkingHelper : MonoBehaviour
 
     public void KoffieAan()
     {
+        if (opwarmen) { return; }
+
         if (sendingRequest) { return; }
 
         if (!webStream.CanWrite)
@@ -205,13 +204,34 @@ public class NetworkingHelper : MonoBehaviour
 
         while (initializing)
         {
-            debugString=("Initing");
+            debugString=("Er wordt verbinding gemaakt met de server");
             yield return new WaitForSeconds(0.1f);
         }
 
 
-
-        debugString = ("State: " + currentState.ToString());
+        switch (currentState)
+        {
+            case KoffieStates.K2:
+                debugString = ("Senseo: 2 Kopjes koffie worden gezet");
+                break;
+            case KoffieStates.K1:
+                debugString = ("Senseo: 1 Kopje koffie wordt gezet");
+                break;
+            case KoffieStates.KA:
+                if (koffieUit)
+                {
+                    debugString = ("Senseo: Koffie wordt uitgezet");
+                    koffieUit = false;
+                    break;
+                }
+                if (!opwarmen)
+                {
+                    debugString = ("Senseo: Koffie wordt opgewarmd");
+                    opwarmen = true;
+                    koffieUit = true;
+                }
+                break;
+        }
 
         WriteString(currentState.ToString());
 
@@ -221,20 +241,17 @@ public class NetworkingHelper : MonoBehaviour
 
         yield return null;
     }
-
+    
     public void CheckForResponse()
     {
         while (true)
         {
-            Debug.Log("Running");
             if (responseListener != null)
             {
                 if (responseListener.Pending())
                 {
                     responseClient = responseListener.AcceptTcpClient();
                     responseReader = new StreamReader(responseClient.GetStream());
-
-                    debugString = ("Read stream initialized");
                 }
 
                 if (responseReader != null)
@@ -248,16 +265,18 @@ public class NetworkingHelper : MonoBehaviour
                     if (responseString.Trim() == errorCodeRfid + "")
                     {
                         debugString = ("RFID: niet ingechecket");
+                        responseString = "";
                         continue;
                     }
-                    if (responseString.Trim() != "")
+                    if (responseString.Trim() == errorCodeKopje + "")
                     {
-                        debugString = ("Response: " + responseString);
+                        debugString = ("Senseo: geen kopje aanwezig");
+                        responseString = "";
                         continue;
                     }
                 }
             }
-            Thread.Sleep(50);
+            Thread.Sleep(500);
         }
     }
 
@@ -283,6 +302,15 @@ public class NetworkingHelper : MonoBehaviour
         webClient.Close();
         webStream.Close();
         webWriter.Close();
+    }
+
+    void OnApplicationQuit()
+    {
+        initThread.Abort();
+        responseThread.Abort();
+        StopAllCoroutines();
+        CloseResponseConnection();
+        CloseSendCon();
     }
 
 }

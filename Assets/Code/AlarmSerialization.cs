@@ -4,17 +4,19 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using System;
 
-[XmlRoot("Root")]
 public class AlarmSerialization
 {
-
-    public List<AlarmElement> documentRoot;
+    [XmlArray("Alarms")]
+    public List<AlarmElement> alarms;
 }
+
 
 public class AlarmElement
 {
+    [XmlElement("Time")]
     public string alarmTime;
 
+    [XmlElement("Action")]
     public string alarmAction;
 
 

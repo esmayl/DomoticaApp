@@ -78,6 +78,7 @@
     <Compile Include="Assets\Code\AlarmSerialization.cs" />
     <Compile Include="Assets\Code\GenerateTime.cs" />
     <Compile Include="Assets\Code\InputHandler.cs" />
+    <Compile Include="Assets\Code\KoffieLight.cs" />
     <Compile Include="Assets\Code\LocalHelper.cs" />
     <Compile Include="Assets\Code\NetworkingHelper.cs" />
     <Compile Include="Assets\Code\ScrollEx.cs" />

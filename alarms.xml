@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<Root xmlns:xsi="<?xml version="1.0" encoding="Windows-1252"?>
-<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <documentRoot>
+<AlarmSerialization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Alarms>
     <AlarmElement>
-      <alarmTime>1/1/2016 11:59:00 PM</alarmTime>
-      <alarmAction>KoffieAan</alarmAction>
+      <Time>2/2/2017 11:59:00 PM</Time>
+      <Action>KoffieAan</Action>
     </AlarmElement>
-  </documentRoot>
-</Root>
+    <AlarmElement>
+      <Time>2/2/2017 11:59:00 PM</Time>
+      <Action>KoffieAan</Action>
+    </AlarmElement>
+    <AlarmElement>
+      <Time>2/2/2017 11:59:00 PM</Time>
+      <Action>KoffieAan</Action>
+    </AlarmElement>
+    <AlarmElement>
+      <Time>2/2/2017 11:59:00 PM</Time>
+      <Action>KoffieAan</Action>
+    </AlarmElement>
+    <AlarmElement>
+      <Time>2/2/2017 2:01:00 AM</Time>
+      <Action>KoffieAan</Action>
+    </AlarmElement>
+    <AlarmElement>
+      <Time>2/2/2017 2:01:00 AM</Time>
+      <Action>KoffieAan</Action>
+    </AlarmElement>
+    <AlarmElement>
+      <Time>2/2/2017 2:01:00 AM</Time>
+      <Action>KoffieAan</Action>
+    </AlarmElement>
+  </Alarms>
+</AlarmSerialization>
