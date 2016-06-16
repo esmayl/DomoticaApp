@@ -1,12 +1,11 @@
 ﻿<Properties StartupItem="DomoticaApp.CSharp.Plugins.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\AlarmLayout.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\GenerateTime.cs">
     <Files>
       <File FileName="Assets\Code\NetworkingHelper.cs" Line="1" Column="1" />
       <File FileName="Assets\Code\LocalHelper.cs" Line="168" Column="1" />
       <File FileName="Assets\Code\GenerateTime.cs" Line="1" Column="1" />
       <File FileName="Assets\Code\AlarmSerialization.cs" Line="1" Column="1" />
-      <File FileName="Assets\KoffieLight.cs" Line="1" Column="1" />
       <File FileName="Assets\Code\AlarmLayout.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

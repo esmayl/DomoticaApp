@@ -94,6 +94,8 @@ public class NetworkingHelper : MonoBehaviour
 
         initializing = true;
 
+        debugString = ("Er wordt verbinding met de server gemaakt");
+
         try
         {
             webClient = new TcpClient(url, 15326);
@@ -112,6 +114,8 @@ public class NetworkingHelper : MonoBehaviour
             webStream = webClient.GetStream();
 
             webWriter = new StreamWriter(webStream, Encoding.ASCII);
+
+            debugString = ("Verbonden");
         }
 
         webClient.Close();

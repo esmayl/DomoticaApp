@@ -12,9 +12,30 @@ public class AlarmLayout : MonoBehaviour
 
     bool update = false;
 
+    public void Start()
+    {
+            foreach (Alarm t in localHelper.GetAlarms())
+            {
+                GameObject temp = Instantiate(template);
+
+                Transform alarmTime1 = temp.transform.FindChild("AlarmTemplate").FindChild("AlarmTijd");
+                Transform alarmTime2 = temp.transform.FindChild("AlarmInfo").FindChild("BG").FindChild("AlarmTijd2");
+                Transform alarmAction = temp.transform.FindChild("AlarmInfo").FindChild("BG").FindChild("AlarmAction");
+
+                string time = String.Format("{0}/{1}/{2}", t.AlarmTime().Day, t.AlarmTime().Month, t.AlarmTime().Year);
+                string time2 = t.AlarmTime().TimeOfDay.ToString();
+
+                alarmTime1.GetComponent<Text>().text = time;
+                alarmTime2.GetComponent<Text>().text = time2;
+                alarmAction.GetComponent<Text>().text = t.actionToPerform.Method.Name;
+
+                temp.transform.SetParent(transform, false);
+            }
+    }
+
     public void Update()
     {
-        if (localHelper.alarmCount != transform.childCount && !update && !localHelper.dirty)
+        if (localHelper.alarmCount != transform.childCount && !update)
         {
             update = true;
 

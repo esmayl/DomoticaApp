@@ -86,9 +86,11 @@ public class LocalHelper : MonoBehaviour
 
                 fullfile = (AlarmSerialization)serializer.Deserialize(reader);
                 alarmCount = fullfile.alarms.Count;
+                fileStream.Close();
             }
+            fileStream.Close();
         }
-        fileStream.Close();
+
 
         checkAlarmTimes = new Thread(CheckAlarmTimes);
         checkAlarmTimes.IsBackground = true;
@@ -144,33 +146,27 @@ public class LocalHelper : MonoBehaviour
 
     public Alarm[] GetAlarms()
     {
-        if (!dirty)
+        List<Alarm> alarms = new List<Alarm>();
+
+        foreach (AlarmElement alarmElement in fullfile.alarms)
         {
-
-            List<Alarm> alarms = new List<Alarm>();
-
-            foreach (AlarmElement alarmElement in fullfile.alarms)
+            Alarm temp = new Alarm();
+            DateTime alarmDateTime = DateTime.ParseExact(alarmElement.alarmTime, formats, CultureInfo.CurrentCulture, DateTimeStyles.None);
+            switch (alarmElement.alarmAction)
             {
-                Alarm temp = new Alarm();
-                DateTime alarmDateTime = DateTime.ParseExact(alarmElement.alarmTime, formats, CultureInfo.CurrentCulture, DateTimeStyles.None);
-                switch (alarmElement.alarmAction)
-                {
-                    case "KoffieAan":
-                        temp = new Alarm(alarmDateTime, KoffieAan);
-                        break;
-                    case "KoffieZetten":
-                        temp = new Alarm(alarmDateTime, KoffieZetten);
-                        break;
-                }
-                if (temp != null)
-                {
-                    alarms.Add(temp);
-                }
+                case "KoffieAan":
+                    temp = new Alarm(alarmDateTime, KoffieAan);
+                    break;
+                case "KoffieZetten":
+                    temp = new Alarm(alarmDateTime, KoffieZetten);
+                    break;
             }
-            return alarms.ToArray();
-
+            if (temp != null)
+            {
+                alarms.Add(temp);
+            }
         }
-        throw new Exception();
+        return alarms.ToArray();
     }
 
     public void SetAlarm()
@@ -241,7 +237,7 @@ public class LocalHelper : MonoBehaviour
             
             fullfile.alarms.Add(temp);
             alarmCount++;
-
+            network.debugText.GetComponent<Text>().text = alarmCount + " alarm count";
             dirty = true;
         }
 
@@ -263,8 +259,10 @@ public class LocalHelper : MonoBehaviour
         checkAlarmTimes.Abort();
         if (dirty)
         {
+            if(fileStream == null)
+                fileStream = new FileStream(pathForDocumentsFile("alarms.xml"),FileMode.OpenOrCreate);
             if(!fileStream.CanRead)
-                fileStream = new FileStream(pathForDocumentsFile("alarms.xml"), FileMode.OpenOrCreate);
+                fileStream = new FileStream(pathForDocumentsFile("alarms.xml"), FileMode.Open);
 
             serializer.Serialize(fileStream, fullfile);
             fileStream.Close();
